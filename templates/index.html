@@ -1,0 +1,169 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Question Generator</title>-->
+<!--    &lt;!&ndash; Bootstrap CSS CDN &ndash;&gt;-->
+<!--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <style>-->
+<!--        /* Body styles */-->
+<!--        body {-->
+<!--            position: relative;-->
+<!--            min-height: 100vh;-->
+<!--            margin: 0;-->
+<!--        }-->
+
+<!--        /* Create a blurred background using ::before */-->
+<!--        body::before {-->
+<!--            content: "";-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--&lt;!&ndash;            background-image: url("{{ url_for('static', filename='ai.webp') }}"); /* Relative path to the image */&ndash;&gt;-->
+<!--            background-size: cover;-->
+<!--            background-position: center;-->
+<!--            background-attachment: fixed;-->
+<!--            filter: blur(3px); /* Apply blur to the background */-->
+<!--            z-index: -1; /* Make sure the background is behind the content */-->
+<!--        }-->
+
+<!--        /* Container for content */-->
+<!--        .container {-->
+<!--            position: relative;-->
+<!--            z-index: 1;-->
+<!--            margin-top: 50px;-->
+<!--            padding: 20px;-->
+<!--            background-color: rgba(255, 255, 255, 0.9); /* Adjust opacity for better readability */-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+
+<!--        /* Heading styles */-->
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--            color: #343a40;-->
+<!--        }-->
+
+<!--        /* Textarea styling */-->
+<!--        textarea {-->
+<!--            resize: none;-->
+<!--        }-->
+
+<!--        /* Media Queries for responsiveness */-->
+<!--        @media (max-width: 768px) {-->
+<!--            .container {-->
+<!--                margin-top: 20px;-->
+<!--                padding: 15px;-->
+<!--            }-->
+<!--            h1 {-->
+<!--                font-size: 24px;-->
+<!--            }-->
+<!--        }-->
+<!--        @media (max-width: 576px) {-->
+<!--            h1 {-->
+<!--                font-size: 20px;-->
+<!--            }-->
+<!--            textarea {-->
+<!--                font-size: 14px;-->
+<!--            }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container">-->
+<!--        <h1>Question Generator</h1>-->
+<!--        <form method="POST">-->
+<!--            <div class="form-group">-->
+<!--                <label for="paragraph">Enter the Paragraph:</label>-->
+<!--                <textarea class="form-control" name="paragraph" rows="5" placeholder="Enter the paragraph..."></textarea>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="num_questions">Number of Questions:</label>-->
+<!--                <input type="number" class="form-control" name="num_questions" min="1" value="5">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="generate_type">What would you like to generate?</label>-->
+<!--                <select class="form-control" name="generate_type">-->
+<!--                    <option value="1">MCQs</option>-->
+<!--                    <option value="2">Questions and Answers</option>-->
+<!--                    <option value="3">Both</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <button type="submit" class="btn btn-primary btn-block">Generate</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Bootstrap JS and dependencies &ndash;&gt;-->
+<!--    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>-->
+<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Generator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            position: relative;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Question Generator</h1>
+        <form method="POST" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="paragraph">Enter the Paragraph:</label>
+                <textarea class="form-control" name="paragraph" id="paragraph" rows="5" placeholder="Enter the paragraph..." required></textarea>
+                <small class="text-danger" id="error-message" style="display:none;">Paragraph must be at least 20 characters long.</small>
+            </div>
+            <div class="form-group">
+                <label for="num_questions">Number of Questions:</label>
+                <input type="number" class="form-control" name="num_questions" min="1" value="5">
+            </div>
+            <div class="form-group">
+                <label for="generate_type">What would you like to generate?</label>
+                <select class="form-control" name="generate_type">
+                    <option value="1">MCQs</option>
+                    <option value="2">Questions and Answers</option>
+                    <option value="3">Both</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Generate</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            let paragraph = document.getElementById('paragraph').value.trim();
+            let errorMessage = document.getElementById('error-message');
+            if (paragraph.length < 20) {
+                errorMessage.style.display = 'block';
+                return false;
+            }
+            errorMessage.style.display = 'none';
+            return true;
+        }
+    </script>
+</body>
+</html>

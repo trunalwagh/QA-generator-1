@@ -1,0 +1,239 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Generated Output</title>-->
+<!--    &lt;!&ndash; Bootstrap CSS CDN &ndash;&gt;-->
+<!--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <style>-->
+<!--        /* Body styles */-->
+<!--        body {-->
+<!--            position: relative;-->
+<!--            min-height: 100vh;-->
+<!--            margin: 0;-->
+<!--            font-family: 'Times New Roman', serif; /* Times New Roman for body text */-->
+<!--        }-->
+
+<!--        /* Create a blurred background using ::before */-->
+<!--        body::before {-->
+<!--            content: "";-->
+<!--            position: absolute;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--&lt;!&ndash;            background-image: url("{{ url_for('static', filename='AI.jpg') }}"); /* Relative path to the image */&ndash;&gt;-->
+<!--            background-size: cover;-->
+<!--            background-position: center;-->
+<!--            background-attachment: fixed;-->
+<!--            filter: blur(5px); /* Apply blur to the background */-->
+<!--            z-index: -1; /* Make sure the background is behind the content */-->
+<!--        }-->
+
+<!--        /* Container for content */-->
+<!--        .container {-->
+<!--            position: relative;-->
+<!--            z-index: 1;-->
+<!--            margin-top: 50px;-->
+<!--            padding: 30px;-->
+<!--            background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent background */-->
+<!--            border-radius: 15px;-->
+<!--            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);-->
+<!--        }-->
+
+<!--        /* Heading styles */-->
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--            color: #ff3700; /* Attractive blue for main heading */-->
+<!--            font-family: 'Times New Roman', sans-serif; /* Use Montserrat for headings */-->
+<!--            font-size: 45px;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        h2 {-->
+<!--            color: #28a745; /* Green for subheadings */-->
+<!--            font-family: 'Montserrat', sans-serif; /* Use Montserrat for headings */-->
+<!--            font-size: 28px;-->
+<!--            margin-top: 30px;-->
+<!--            border-bottom: 2px solid #aa351b; /* Underline effect */-->
+<!--            padding-bottom: 10px;-->
+<!--        }-->
+
+<!--        /* Styling for MCQs and Questions & Answers */-->
+<!--        .qa-box, .mcq-box {-->
+<!--            padding: 15px;-->
+<!--            border: 2px solid #000000; /* Border for the boxes */-->
+<!--            border-radius: 10px;-->
+<!--            margin-bottom: 20px;-->
+<!--            background-color: #3d3d3d; /* Black background color */-->
+<!--            color: #fff; /* White text color for readability */-->
+<!--        }-->
+
+<!--        p {-->
+<!--            font-size: 18px;-->
+<!--            margin: 10px 0;-->
+<!--            color: #f8f9fa; /* Lighter text color */-->
+<!--        }-->
+
+<!--        ul {-->
+<!--            list-style-type: none;-->
+<!--            padding-left: 0;-->
+<!--        }-->
+
+<!--        li {-->
+<!--            padding: 5px 0;-->
+<!--            font-size: 16px;-->
+<!--            color: #dddddd; /* Slightly lighter color for options */-->
+<!--        }-->
+
+<!--        /* Button styling */-->
+<!--        .btn-primary {-->
+<!--            background-color: #007bff;-->
+<!--            border-color: #007bff;-->
+<!--            font-size: 18px;-->
+<!--        }-->
+
+<!--        /* Media Queries for responsiveness */-->
+<!--        @media (max-width: 768px) {-->
+<!--            .container {-->
+<!--                margin-top: 20px;-->
+<!--                padding: 15px;-->
+<!--            }-->
+<!--            h1 {-->
+<!--                font-size: 28px;-->
+<!--            }-->
+<!--            h2 {-->
+<!--                font-size: 24px;-->
+<!--            }-->
+<!--            p {-->
+<!--                font-size: 16px;-->
+<!--            }-->
+<!--        }-->
+<!--        @media (max-width: 576px) {-->
+<!--            h1 {-->
+<!--                font-size: 22px;-->
+<!--            }-->
+<!--            h2 {-->
+<!--                font-size: 20px;-->
+<!--            }-->
+<!--            p {-->
+<!--                font-size: 14px;-->
+<!--            }-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container">-->
+<!--        <h1>Generated Output</h1>-->
+
+<!--        &lt;!&ndash; MCQs Section &ndash;&gt;-->
+<!--        {% if output.mcqs %}-->
+<!--            <h2>MCQs:</h2>-->
+<!--            {% for mcq in output.mcqs %}-->
+<!--                <div class="mcq-box">-->
+<!--                    <p><strong>{{ loop.index }}. {{ mcq.question }}</strong></p>-->
+<!--                    <ul>-->
+<!--                        {% for option in mcq.options %}-->
+<!--                            <li>{{ option }}</li>-->
+<!--                        {% endfor %}-->
+<!--                    </ul>-->
+<!--                    <p><strong>Correct Answer:</strong> {{ mcq.correct_answer }}</p>-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--        {% endif %}-->
+
+<!--        &lt;!&ndash; Questions and Answers Section &ndash;&gt;-->
+<!--        {% if output.qa %}-->
+<!--            <h2>Questions and Answers:</h2>-->
+<!--            {% for question, answer in output.qa %}-->
+<!--                <div class="qa-box">-->
+<!--                    <p><strong>{{ loop.index }}. {{ question }}</strong></p>-->
+<!--                    <p><strong>Answer:</strong> {{ answer }}</p>-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--        {% endif %}-->
+
+<!--        &lt;!&ndash; Button to go back to the form &ndash;&gt;-->
+<!--        <a href="/" class="btn btn-primary btn-block mt-4">Generate More</a>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Bootstrap JS and dependencies &ndash;&gt;-->
+<!--    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>-->
+<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Output</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            position: relative;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            margin-top: 50px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .mcq-box, .qa-box {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generated Output</h1>
+
+        {% if output.mcqs %}
+            <h2>MCQs:</h2>
+            {% for mcq in output.mcqs %}
+                <div class="mcq-box">
+                    <p><strong>{{ loop.index }}. {{ mcq.question }}</strong></p>
+                    <ul>
+                        {% for option in mcq.options %}
+                            <li>{{ option }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p><strong>Correct Answer:</strong> {{ mcq.correct_answer }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if output.qa %}
+            <h2>Questions and Answers:</h2>
+            {% for question, answer in output.qa %}
+                <div class="qa-box">
+                    <p><strong>{{ loop.index }}. {{ question }}</strong></p>
+                    <p><strong>Answer:</strong> {{ answer }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <a href="/" class="btn btn-primary btn-block mt-4">Generate More</a>
+    </div>
+</body>
+</html>
