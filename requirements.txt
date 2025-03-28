@@ -1,5 +1,4 @@
 flask
 transformers
-random
 torch
 Gunicorn
